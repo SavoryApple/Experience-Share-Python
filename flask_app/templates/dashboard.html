@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>{{loggedin_user.first_name}}'s Dashboard</title>
+</head>
+
+<body>
+    <div class="navbar d-flex flex-row justify-content-around border mb-5">
+        <div class="container w-25">
+            <h2 class="ml-3">Welcome, {{loggedin_user.first_name}} {{loggedin_user.last_name}}!</h2>
+        </div>
+        <div class="container d-flex flex-row w-25">
+            <form action="/new">
+                <button class="btn btn-primary">Add Magazine</button>
+            </form>
+            <form action="/user/account">
+                <button class="btn btn-primary">Account</button>
+            </form>
+            <form action="/logout">
+                <button class="btn btn-primary">Log Out</button>
+            </form>
+        </div>
+    </div>
+    <div class="container d-flex flex-row w-25">
+        <div class="container">
+            <h3>All Magazines:</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Added By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for one_magazine in magazines %}
+                    <tr>
+                        <form action="/view_instructions" method="post">
+                            <input type="hidden" value="{{one_magazine.id}}" name="magazine_id">
+                            <td><a href="/show/{{one_magazine.id}}">{{one_magazine.title}}</a></td>
+                            <td>{{one_magazine.first_name}} {{one_magazine.last_name}}</td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</body>
+
+</html>

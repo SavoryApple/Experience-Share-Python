@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1>I've tried....(enter your own story!)</h1>
+        <div class="navbar-buttons">
+            <a id="button" href="/display_login">Login</a>
+            <a id="button" href="/display_register">Signup</a>
+            <a id="button" href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="navbar-2">
+        <a id="button" href="/">Home</a>
+        <a id="button" href="display_explore">Explore</a>
+        <a id="button" href="/display_create">Create</a>
+        <a id="button" href="/display_about">About</a>
+        <a id="button" href="/display_account">Account</a>
+    </div>
+    <div class="example">
+        <img class="image-garcinia" alt="bottle of garcinia capsules" src="{{ url_for('static', filename='img/garcinia.jpg') }}">
+        <h2>Example:</h2>
+        <h2>Trader Joe's Garcinia</h2>
+        <p class="tab example-paragraph">Recently while at Trader Joe's, I noticed a new herbal supplement that is meant to help lose weight. Surprisingly, it is actually working! I've tried countless gimmicks just like this that did aboslutely nothing, but so far on this one I've lost over 15 pounds! I definitely recommend this product to anyone else in my situation. Im excited to hear what everyone else's experience has been as well!</p>
+        <p class="tab text-margin">
+            Created By: 
+            <a href="#">Jane Doe</a> | March 16, 2019 | 
+            <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}"></a> 619 
+            <img class="down-arrow" src="{{ url_for('static', filename='img/down-arrow.png') }}">
+        </p>
+        <h3 class="tab example-comments">Comments:</h3>
+        <p class="tab"><a href="#">Alicia James</a> On March 18, 2019</p>
+        <p class="double-indent example-comment"> I'm so glad you shared this story, I'm definitely going to give this a try myself!</p>
+    </div>
+</body>
+</html>

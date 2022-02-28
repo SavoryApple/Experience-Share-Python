@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Explore</title>
+</head>
+
+<body>
+    <div class="login-navbar">
+        <h2>Welcome back, {{loggedin_user.first_name}}</h2>
+        <h1>Explore</h1>
+        <div class="navbar-buttons">
+            <a id="button" href="/display_create">Create</a>
+            <a id="button" href="/">Home</a>
+        </div>
+    </div>
+    <div class="navbar-2b">
+        <h2>Display By:</h2>
+        <a href="#">A-Z</a>
+        <a href="#">votes</a>
+        <a href="#">category</a>
+    </div>
+    <table>
+        <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Created By</th>
+            <th>votes</th>
+        </tr>
+        {% for one_story in stories %}
+        <tr>
+            <form action="/view_instructions" method="post">
+                <input type="hidden" value="{{one_story.id}}" name="story_id">
+                <td><a href="/show/{{one_story.id}}">{{one_story.item_name}}</a></td>
+                <td>{{one_story.category}}</td>
+                <td>{{one_story.creator_id}}</td>
+                <td>Coming soon...</td>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

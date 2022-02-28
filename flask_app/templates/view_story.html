@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Story</title>
+</head>
+
+<body>
+    <div class="login-navbar">
+        <h2>Welcome back, {{loggedin_user.first_name}}</h2>
+        <h1>{{story_info.item_name}}</h1>
+        <div class="navbar-buttons">
+            <a id="button" href="/display_create">Create</a>
+            <a id="button" href="/">Home</a>
+        </div>
+    </div>
+    <div class="example">
+        <img class="image-garcinia" alt="story picture" src="{{story_info.img_url}}">
+        <h2>
+            {{story_info.place_purchased}}: 
+            {{story_info.item_name}}
+            {% if story_info.creator_id == story_info.user.id %}
+            <a href="#">Update</a>
+            <a href="#">Delete</a>
+            {%endif%}
+            
+
+
+        </h2>
+        <p class="tab example-paragraph">{{story_info.story}}</p>
+        <p class="tab text-margin">
+            Created By: 
+            <a href="#">{{story_info.user.first_name}} {{story_info.user.last_name}}</a> | {{story_info.created_at}} | 
+            <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}"></a> 619 
+            <img class="down-arrow" src="{{ url_for('static', filename='img/down-arrow.png') }}">
+        </p>
+        <h3 class="tab example-comments">Comments:</h3>
+        <p class="tab"><a href="#">Alicia James</a> On March 18, 2019</p>
+        <p class="double-indent example-comment"> I'm so glad you shared this story, I'm definitely going to give this a try myself!</p>
+    </div>
+</body>
+
+</html>
