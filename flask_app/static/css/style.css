@@ -38,6 +38,26 @@ body {
     box-shadow: 2px 2px 2px black;
 }
 
+.update-delete {
+    display: flex;
+    flex-direction: row;
+    
+    align-items: center;
+    gap: 15px;
+}
+
+#redbutton {
+    border: 3px solid black;
+    height: 30px;
+    width: 65px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: red;
+    line-height: 29px;
+    box-shadow: 2px 2px 2px black;
+}
+
 .navbar-2 {
     height: 75px;
     width: 100%;

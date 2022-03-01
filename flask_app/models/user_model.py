@@ -94,6 +94,15 @@ class User:
             return cls(results[0])
         return False
 
+    @classmethod
+    def get_all_with_stories_created(cls):
+        query = '''
+                SELECT * FROM users
+                LEFT JOIN stories ON users.id = creator_id;
+                '''
+        return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
+        
+
 ###########################################################################################################
 
     

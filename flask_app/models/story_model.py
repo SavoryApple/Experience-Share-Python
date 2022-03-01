@@ -62,6 +62,24 @@ class Story:
                 this_story.user = this_user
             return this_story
 
+    @classmethod
+    def get_story_by_id(cls, data):
+        query = """SELECT * FROM stories WHERE id = %(id)s;"""
+        results = connectToMySQL('story_project_schema').query_db( query, data )
+        if results:
+            return cls(results[0])
+        return False
+
+    @classmethod
+    def update_story(cls, data):
+        query = """UPDATE stories SET category = %(category)s, item_name=%(item_name)s, place_purchased=%(place_purchased)s, img_url=%(img_url)s, story=%(story)s, updated_at=NOW() WHERE id=%(id)s;"""
+        return connectToMySQL('story_project_schema').query_db( query, data )
+
+    @classmethod
+    def delete_story(cls, data):
+        query = """DELETE FROM stories WHERE id = %(id)s"""
+        return connectToMySQL('story_project_schema').query_db( query, data )
+
 
 
 
@@ -69,18 +87,9 @@ class Story:
 
     
 
-    @classmethod
-    def delete_magazine(cls, data):
-        query = """DELETE FROM magazines WHERE id = %(id)s"""
-        return connectToMySQL('belt_exam').query_db( query, data )
+    
 
-    @classmethod
-    def get_magazine(cls, data):
-        query = """SELECT * FROM magazines WHERE id = %(id)s;"""
-        results = connectToMySQL('belt_exam').query_db( query, data )
-        if results:
-            return cls(results[0])
-        return False
+    
 
     
 

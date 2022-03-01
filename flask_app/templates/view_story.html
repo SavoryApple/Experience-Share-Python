@@ -24,8 +24,9 @@
             {{story_info.place_purchased}}: 
             {{story_info.item_name}}
             {% if story_info.creator_id == story_info.user.id %}
-            <a href="#">Update</a>
-            <a href="#">Delete</a>
+            
+            <a href="/display_update/{{story_info.id}}">Update</a>
+            
             {%endif%}
             
 

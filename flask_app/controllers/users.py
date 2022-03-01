@@ -26,7 +26,7 @@ def display_explore():
     if 'user_id' not in session:
         return redirect('/display_login')
     loggedin_user = User.get_by_id({'id' : int(session['user_id'])})
-    stories = Story.get_stories_a_thru_z()
+    stories = User.get_all_with_stories_created()
     return render_template('explore.html', loggedin_user=loggedin_user, stories=stories)
 
 @app.route('/display_account')

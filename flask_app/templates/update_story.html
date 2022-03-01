@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Create</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+
+    <body>
+        <div class="login-navbar">
+            <h1>I've tried...(enter your own story!)</h1>
+            <a id="button" href="/">Home</a>
+        </div>
+        <div class="login-container">
+            <h2 class="login-h2">Update</h2>
+            <form action="/update_story/{{story_info.id}}" method="post">
+                <div class="firstname">
+                    <label for="category">Category:</label>
+                    <select name="category">
+                        <option value="choose">Choose...</option>
+                        <option value="supplement">Supplement</option>
+                        <option value="grocery">Grocery</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="toys">Toys</option>
+                    </select>
+                </div>
+                <div class="item-name">
+                    <label class="text-label" for="item_name">Item Name:</label>
+                    <input class="text-input" type="text" name="item_name" value="{{story_info.item_name}}">
+                </div>
+                <div class="place-purchased">
+                    <label class="text-label" for="place_purchased">Place Purchased:</label>
+                    <input class="text-input" type="text" name="place_purchased" value="{{story_info.place_purchased}}">
+                </div>
+                <div class="optional-image">
+                    <label class="img_url" for="img_url"> Image URL (optional):</label>
+                    <textarea name="img_url" cols="30" rows="10">{{story_info.img_url}}</textarea>
+                </div>
+                <div class="your-story">
+                    <label class="your-story" for="login_confirm_password"> Your Story:</label>
+                    <textarea name="your_story" cols="30" rows="10">{{story_info.story}}</textarea>
+                </div>
+                <div class="update-delete">
+                <button id="button">Update</button>
+                <a href="/delete_story/{{story_info.id}}">Delete</a>
+            </div>
+        </div>
+        {% with messages = get_flashed_messages(category_filter=['create']) %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="flash-box">
+            <p>{{message}}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </form>
+        </div>
+    </body>
+
+    </html>
+</body>
+
+</html>
