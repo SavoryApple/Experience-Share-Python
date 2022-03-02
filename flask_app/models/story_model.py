@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask import flash, Flask, session, request
+from flask import flash
 from flask_app.models import user_model
 
 class Story:
@@ -37,9 +37,28 @@ class Story:
         return is_valid
 
     @classmethod
-    def get_stories_a_thru_z(cls):
-        query = """SELECT * FROM stories ORDER BY item_name;"""
-        return connectToMySQL('story_project_schema').query_db( query )
+    def get_all_with_all_users(cls):
+        query = '''
+                SELECT * FROM stories
+                JOIN users ON users.id = creator_id;
+                '''
+        return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
+
+    @classmethod
+    def get_all_with_all_users_sorted_by_a_thru_z(cls):
+        query = '''
+                SELECT * FROM stories
+                JOIN users ON users.id = creator_id ORDER BY item_name;
+                '''
+        return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
+
+    @classmethod
+    def get_all_with_all_users_sorted_by_category(cls):
+        query = '''
+                SELECT * FROM stories
+                JOIN users ON users.id = creator_id ORDER BY category;
+                '''
+        return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
         
     @classmethod
     def get_one_with_creator(cls, data):

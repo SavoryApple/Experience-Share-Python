@@ -27,7 +27,6 @@ class User:
 
     @staticmethod
     def validate_user_registration(data):
-        print("DATAAA:", data)
         user_in_db = User.get_by_email(data)
         is_valid = True 
         if user_in_db:
@@ -94,48 +93,79 @@ class User:
             return cls(results[0])
         return False
 
+    # @classmethod
+    # def get_all_with_stories_created(cls):
+    #     query = '''
+    #             SELECT * FROM users
+    #             LEFT JOIN stories ON users.id = creator_id;
+    #             '''
+    #     return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
+
     @classmethod
-    def get_all_with_stories_created(cls):
+    def update_user_account(cls, data):
+        query = "UPDATE users SET first_name = %(first_name)s, last_name= %(last_name)s, email = %(email)s, password=%(password)s, updated_at = NOW() WHERE id = %(id)s;"
+        return connectToMySQL('story_project_schema').query_db( query, data )
+
+    @staticmethod
+    def validate_update_user(data):
+        is_valid = True
+        if len(data['first_name']) < 3:
+            flash("First name must be at least 3 letters", 'update')
+            is_valid = False
+        if len(data['last_name']) < 3:
+            flash("Last name must be at least 3 letters", 'update')
+            is_valid = False
+        if not EMAIL_REGEX.match(data['email']): 
+            flash("Email is wrong format", 'update')
+            is_valid = False
+        if not data['first_name'].isalpha():
+            flash("Please enter characters A-Z only in first name", 'update')
+            is_valid = False
+        if not data['last_name'].isalpha():
+            flash("Please enter characters A-Z only in last name", 'update')
+            is_valid = False
+        if len(data['password']) < 8:
+            flash('Password must be at least 8 characters long', 'update')
+            is_valid = False
+        if data['password'] != data['confirm_password']:
+            flash('Passwords must match', 'update')
+            is_valid = False
+        if is_valid:
+            flash("Thank you for updating your account info!", 'update_success')
+        return is_valid
+
+    @classmethod
+    def get_one_with_stories_created(cls, data):
         query = '''
                 SELECT * FROM users
-                LEFT JOIN stories ON users.id = creator_id;
+                LEFT JOIN stories ON users.id = creator_id
+                WHERE users.id = %(id)s;
                 '''
-        return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
+        results = connectToMySQL('story_project_schema').query_db( query, data ) # list of dictionaries
+        this_user = cls(results[0]) 
+        this_user.stories = [] # the .recipes part is made up, could be named anything
+        if results[0]['stories.id']:
+            for row in results:
+                data = {
+                    **row,
+                    'id' : row['stories.id'],
+                    'created_at' : row['stories.created_at'],
+                    'updated_at' : row['stories.updated_at']
+                }# creates unique data for a single recipe
+                this_story = story_model.Story(data)# turns single dictionary recipe into a recipe object
+                this_user.stories.append(this_story)# adds recipe object to the user list of recipes
+        return this_user
+
+    
         
 
 ###########################################################################################################
 
     
 
-    @classmethod
-    def update_user(cls, data):
-        query = """UPDATE users SET first_name = %(first_name)s, last_name
-        = %(last_name)s, email = %(email)s
-        WHERE id = %(id)s;"""
-        return connectToMySQL('belt_exam').query_db( query, data )
+    
 
-    @classmethod
-    def get_one_with_magazines_created(cls, data):
-        query = '''
-                SELECT * FROM users
-                LEFT JOIN magazines ON users.id = creator_id
-                WHERE users.id = %(id)s;
-                '''
-        results = connectToMySQL('belt_exam').query_db( query, data ) # list of dictionaries
-        this_user = cls(results[0]) 
-        print(this_user)
-        this_user.magazines = [] # the .recipes part is made up, could be named anything
-        if results[0]['magazines.id']:
-            for row in results:
-                data = {
-                    **row,
-                    'id' : row['magazines.id'],
-                    'created_at' : row['magazines.created_at'],
-                    'updated_at' : row['magazines.updated_at']
-                }# creates unique data for a single recipe
-                this_magazine = story_model.Magazine(data)# turns single dictionary recipe into a recipe object
-                this_user.magazines.append(this_magazine)# adds recipe object to the user list of recipes
-        return this_user
+    
 
     @classmethod
     def get_one_with_recipes_favorited(cls, data):
@@ -175,23 +205,5 @@ class User:
 
     
     
-    @staticmethod
-    def validate_update_user(data):
-        is_valid = True
-        if len(data['first_name']) < 3:
-            flash("First name must be at least 3 letters", 'update')
-            is_valid = False
-        if len(data['last_name']) < 3:
-            flash("Last name must be at least 3 letters", 'update')
-            is_valid = False
-        if not EMAIL_REGEX.match(data['email']): 
-            flash("Email is wrong format", 'update')
-            is_valid = False
-        if not data['first_name'].isalpha():
-            flash("Please enter characters A-Z only in first name", 'update')
-            is_valid = False
-        if not data['last_name'].isalpha():
-            flash("Please enter characters A-Z only in last name", 'update')
-            is_valid = False
-        return is_valid
+    
         

@@ -11,9 +11,13 @@
     <div class="navbar">
         <h1>I've tried....(enter your own story!)</h1>
         <div class="navbar-buttons">
+            {% if not session['user_id'] %}
             <a id="button" href="/display_login">Login</a>
             <a id="button" href="/display_register">Signup</a>
+            {% endif %}
+            {% if session['user_id'] %}
             <a id="button" href="/logout">Logout</a>
+            {% endif %}
         </div>
     </div>
     <div class="navbar-2">

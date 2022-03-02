@@ -21,28 +21,44 @@
     <div class="example">
         <img class="image-garcinia" alt="story picture" src="{{story_info.img_url}}">
         <h2>
-            {{story_info.place_purchased}}: 
+            {{story_info.place_purchased}}:
             {{story_info.item_name}}
-            {% if story_info.creator_id == story_info.user.id %}
-            
+            {% if story_info.creator_id == loggedin_user.id %}
             <a href="/display_update/{{story_info.id}}">Update</a>
-            
             {%endif%}
-            
-
-
         </h2>
         <p class="tab example-paragraph">{{story_info.story}}</p>
         <p class="tab text-margin">
-            Created By: 
-            <a href="#">{{story_info.user.first_name}} {{story_info.user.last_name}}</a> | {{story_info.created_at}} | 
-            <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}"></a> 619 
+            Created By:
+            <a href="#">{{story_info.user.first_name}} {{story_info.user.last_name}}</a> | {{story_info.created_at}} |
+            <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}"></a> 619
             <img class="down-arrow" src="{{ url_for('static', filename='img/down-arrow.png') }}">
         </p>
-        <h3 class="tab example-comments">Comments:</h3>
-        <p class="tab"><a href="#">Alicia James</a> On March 18, 2019</p>
-        <p class="double-indent example-comment"> I'm so glad you shared this story, I'm definitely going to give this a try myself!</p>
+        <div class="comments-div">
+            <h3>Comments:</h3>
+            {% for one_comment in comments %}
+            <h3>{{one_comment.first_name}} at {{one_comment.created_at}}:</h3>
+            <p class="double-indent">{{one_comment.content}}</p>
+            {%endfor%}
+        </div>
     </div>
+    {% if session['user_id'] %}
+    <form action="/save_comment/{{story_info.id}}" method="post">
+        <h2>Write a Comment</h2>
+        <textarea name="comment" cols="50" rows="8"></textarea>
+        <button>Submit</button>
+        {%endif%}
+        {% with messages = get_flashed_messages(category_filter=['comment']) %}
+                {% if messages %}
+                    {% for message in messages %}
+            <div class="flash-box">
+                <p>{{message}}</p>
+            </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+    </form>
+    
 </body>
 
 </html>
