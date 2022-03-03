@@ -133,6 +133,10 @@ body {
     margin-top: 15px;
 }
 
+.comments-div h3 {
+    margin-bottom: 10px;
+}
+
 .example h2 {
     margin-top: 5px;
 }
@@ -147,6 +151,12 @@ body {
 .text-margin {
     margin-top: 10px;
     
+}
+
+.votes {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }
 
 .double-indent {

@@ -51,7 +51,7 @@ def display_explore_sorted_category():
 @app.route('/display_account')
 def display_loggedin_user_account():
     if 'user_id' not in session:
-        return redirect('/dispay_login')
+        return redirect('/display_login')
     loggedin_user = User.get_by_id({"id" : session['user_id']})
     user_stories = User.get_one_with_stories_created({'id' : int(session['user_id'])})
     return render_template('account.html', loggedin_user=loggedin_user, user_stories=user_stories)

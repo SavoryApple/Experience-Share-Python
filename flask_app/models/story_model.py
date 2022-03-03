@@ -38,26 +38,17 @@ class Story:
 
     @classmethod
     def get_all_with_all_users(cls):
-        query = '''
-                SELECT * FROM stories
-                JOIN users ON users.id = creator_id;
-                '''
+        query = "SELECT * FROM stories JOIN users ON users.id = creator_id;"
         return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
 
     @classmethod
     def get_all_with_all_users_sorted_by_a_thru_z(cls):
-        query = '''
-                SELECT * FROM stories
-                JOIN users ON users.id = creator_id ORDER BY item_name;
-                '''
+        query = "SELECT * FROM stories JOIN users ON users.id = creator_id ORDER BY stories.item_name;"
         return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
 
     @classmethod
     def get_all_with_all_users_sorted_by_category(cls):
-        query = '''
-                SELECT * FROM stories
-                JOIN users ON users.id = creator_id ORDER BY category;
-                '''
+        query = "SELECT * FROM stories JOIN users ON users.id = creator_id ORDER BY category;"
         return connectToMySQL('story_project_schema').query_db( query ) # list of dictionaries
         
     @classmethod

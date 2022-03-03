@@ -16,6 +16,7 @@
         <div class="navbar-buttons">
             <a id="button" href="/display_create">Create</a>
             <a id="button" href="/">Home</a>
+            <a id="button" href="/display_explore">Explore</a>
         </div>
     </div>
     <div class="example">
@@ -28,16 +29,21 @@
             {%endif%}
         </h2>
         <p class="tab example-paragraph">{{story_info.story}}</p>
-        <p class="tab text-margin">
+        <div class="tab text-margin votes">
             Created By:
             <a href="#">{{story_info.user.first_name}} {{story_info.user.last_name}}</a> | {{story_info.created_at}} |
-            <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}"></a> 619
-            <img class="down-arrow" src="{{ url_for('static', filename='img/down-arrow.png') }}">
-        </p>
+            <a href="/upvote/{{story_info.id}}">
+                <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}">
+            </a> 
+            <p> {{votes['SUM(vote)']}} </p> 
+            <a href="/downvote/{{story_info.id}}">
+                <img class="down-arrow" src="{{ url_for('static', filename='img/down-arrow.png') }}">
+            </a>
+        </div>
         <div class="comments-div">
             <h3>Comments:</h3>
             {% for one_comment in comments %}
-            <h3>{{one_comment.first_name}} at {{one_comment.created_at}}:</h3>
+            <h3 class="tab">{{one_comment.first_name}} at {{one_comment.created_at}}:</h3>
             <p class="double-indent">{{one_comment.content}}</p>
             {%endfor%}
         </div>
