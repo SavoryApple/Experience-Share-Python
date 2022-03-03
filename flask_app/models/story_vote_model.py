@@ -11,13 +11,18 @@ class story_Vote:
         self.story_id = data['story_id']
 
     @classmethod
+    def create_vote_with_user(cls, data):
+        query = "INSERT INTO story_votes (vote, created_at, updated_at, user_id, story_id) VALUES (0, NOW(), NOW(), %(user_id)s, %(story_id)s);"
+        return connectToMySQL('story_project_schema').query_db( query, data )
+
+    @classmethod
     def upvote_on_story_from_user(cls, data):
-        query = "INSERT INTO story_votes (vote, created_at, updated_at, user_id, story_id) VALUES (1, NOW(), NOW(), %(user_id)s, %(story_id)s);"
+        query = "UPDATE story_votes SET vote = 1 WHERE user_id = %(user_id)s;"
         return connectToMySQL('story_project_schema').query_db( query, data )
 
     @classmethod
     def downvote_on_story_from_user(cls, data):
-        query = "INSERT INTO story_votes (vote, created_at, updated_at, user_id, story_id) VALUES (-1, NOW(), NOW(), %(user_id)s, %(story_id)s);"
+        query = "UPDATE story_votes SET vote = -1 WHERE user_id = %(user_id)s;"
         return connectToMySQL('story_project_schema').query_db( query, data )
 
     @classmethod

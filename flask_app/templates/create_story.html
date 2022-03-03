@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik&display=swap" rel="stylesheet">
     <title>Create</title>
 </head>
 
@@ -31,7 +34,7 @@
         </div>
         <div class="login-container">
             <h2 class="login-h2">Create</h2>
-            <form action="/create_story" method="post">
+            <form class="update-story-form" action="/create_story" method="post">
                 <div class="firstname">
                     <label for="category">Category:</label>
                     <select name="category">
@@ -52,13 +55,13 @@
                 </div>
                 <div class="optional-image">
                     <label class="img_url" for="img_url"> Image URL (optional):</label>
-                    <textarea name="img_url" cols="30" rows="10"></textarea>
+                    <textarea name="img_url" cols="30" rows="5"></textarea>
                 </div>
                 <div class="your-story">
                     <label class="your-story" for="login_confirm_password"> Your Story:</label>
                     <textarea name="your_story" cols="30" rows="10"></textarea>
                 </div>
-                <button id="button">Create</button>
+                <button id="update-account-button">Create</button>
                 {% with messages = get_flashed_messages(category_filter=['create']) %}
                 {% if messages %}
                 {% for message in messages %}

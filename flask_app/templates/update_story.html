@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik&display=swap" rel="stylesheet">
     <title>Create</title>
 </head>
 
@@ -24,11 +27,16 @@
     <body>
         <div class="login-navbar">
             <h1>I've tried...(enter your own story!)</h1>
-            <a id="button" href="/">Home</a>
+            <div class="navbar-buttons">
+                <a id="button" href="/">Home</a>
+                <a id="button" href="/display_explore">Explore</a>
+                <a id="button" href="/display_create">Create</a>
+                <a id="button" href="/logout">Logout</a>
+            </div>
         </div>
         <div class="login-container">
             <h2 class="login-h2">Update</h2>
-            <form action="/update_story/{{story_info.id}}" method="post">
+            <form class="update-story-form" action="/update_story/{{story_info.id}}" method="post">
                 <div class="firstname">
                     <label for="category">Category:</label>
                     <select name="category">
@@ -49,16 +57,16 @@
                 </div>
                 <div class="optional-image">
                     <label class="img_url" for="img_url"> Image URL (optional):</label>
-                    <textarea name="img_url" cols="30" rows="10">{{story_info.img_url}}</textarea>
+                    <textarea name="img_url" cols="30" rows="5">{{story_info.img_url}}</textarea>
                 </div>
                 <div class="your-story">
                     <label class="your-story" for="login_confirm_password"> Your Story:</label>
                     <textarea name="your_story" cols="30" rows="10">{{story_info.story}}</textarea>
                 </div>
                 <div class="update-delete">
-                <button id="button">Update</button>
-                <a href="/delete_story/{{story_info.id}}">Delete</a>
-            </div>
+                    <button id="update-account-button">Update</button>
+                    <a href="/delete_story/{{story_info.id}}">Delete</a>
+                </div>
         </div>
         {% with messages = get_flashed_messages(category_filter=['create']) %}
         {% if messages %}

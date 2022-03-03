@@ -25,6 +25,7 @@ def display_view(story_id):
         "story_id" : story_id,
         "user_id" : session['user_id']
     }
+    story_Vote.create_vote_with_user(data)
     votes = story_Vote.sum_all_votes_with_story_id(data)
     return render_template("view_story.html", story_info=story_info, loggedin_user=loggedin_user, comments=comments, votes=votes)
 

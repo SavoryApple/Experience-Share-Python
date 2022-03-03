@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik&display=swap" rel="stylesheet"> 
     <title>Story</title>
 </head>
 
@@ -17,10 +20,11 @@
             <a id="button" href="/display_create">Create</a>
             <a id="button" href="/">Home</a>
             <a id="button" href="/display_explore">Explore</a>
+            <a id="button" href="/logout">Logout</a>
         </div>
     </div>
     <div class="example">
-        <img class="image-garcinia" alt="story picture" src="{{story_info.img_url}}">
+        <img class="image-view-story" alt="story picture" src="{{story_info.img_url}}">
         <h2>
             {{story_info.place_purchased}}:
             {{story_info.item_name}}
@@ -43,16 +47,16 @@
         <div class="comments-div">
             <h3>Comments:</h3>
             {% for one_comment in comments %}
-            <h3 class="tab">{{one_comment.first_name}} at {{one_comment.created_at}}:</h3>
+            <h3 class="tab">{{one_comment.first_name}} on {{one_comment.created_at.strftime('%b %d')}} at {{one_comment.created_at.strftime('%I:%M%p')}}:</h3>
             <p class="double-indent">{{one_comment.content}}</p>
             {%endfor%}
         </div>
     </div>
     {% if session['user_id'] %}
-    <form action="/save_comment/{{story_info.id}}" method="post">
+    <form class="comment-form" action="/save_comment/{{story_info.id}}" method="post">
         <h2>Write a Comment</h2>
         <textarea name="comment" cols="50" rows="8"></textarea>
-        <button>Submit</button>
+        <button id="comment-submit">Submit</button>
         {%endif%}
         {% with messages = get_flashed_messages(category_filter=['comment']) %}
                 {% if messages %}
