@@ -42,6 +42,21 @@ body {
     background-color: #e2ded0;
 }
 
+.account-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 200px;
+    gap: 5px;
+    background-color: #e2ded0;
+}
+
+.account-info-container p {
+    font-size: 25px;
+}
+
 .account-form-container input {
     font-size: 18px;
 }
@@ -143,6 +158,21 @@ body {
 .navbar-2b a:link, .navbar-2b a:visited {
     text-decoration: none;
     color: blue;
+}
+
+.comment-votes {
+    width: 5%;
+}
+
+.comments-div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.comments-all-content {
+    display: flex;
+    flex-direction: row;
 }
 
 .navbar-2b a:hover {

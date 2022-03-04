@@ -56,6 +56,14 @@ def display_loggedin_user_account():
     user_stories = User.get_one_with_stories_created({'id' : int(session['user_id'])})
     return render_template('account.html', loggedin_user=loggedin_user, user_stories=user_stories)
 
+@app.route('/user/<int:account_id>')
+def display_other_user_account(account_id):
+    if 'user_id' not in session:
+        return redirect('/display_login')
+    account_info = User.get_by_id({"id" : account_id})
+    user_stories = User.get_one_with_stories_created({"id" : account_id})
+    return render_template('other_user_account.html', account_info=account_info, user_stories=user_stories)
+
 @app.route('/display_about')
 def display_about():
     return render_template('about.html')

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik&display=swap" rel="stylesheet">
+    <title>{{account_info.first_name}}'s Account</title>
+</head>
+
+<body>
+    <div class="navbar d-flex flex-row justify-content-evenly border mb-5 ">
+        <div class="container w-50">
+
+        </div>
+        <div class="navbar">
+            <h1>{{account_info.first_name}}'s Account</h1>
+            <div class="navbar-buttons">
+                <a id="button" href="/display_create">Create</a>
+                <a id="button" href="/display_explore">Explore</a>
+                <a id="button" href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="account-container">
+        <div class="account-info-container" action="/update_account" method="post">
+            <div class="first_name">
+                <label class="text-label" for="update_first_name">First Name:</label>
+                <p>{{account_info.first_name}}</p>
+            </div>
+            <div class="last_name">
+                <label class="text-label" for="update_last_name">Last Name:</label>
+                <p>{{account_info.last_name}}</p>
+            </div>
+            <div class="email">
+                <label class="text-label" for="update_email">Email:</label>
+                <p>{{account_info.email}}</p>
+            </div>
+        </div>
+        <div class="account-stories-container">
+            <h3>Their Stories</h3>
+            <table class="table-width">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Place Purchased</th>
+                </tr>
+                {% for row in user_stories.stories %}
+                <tr>
+                    <td><a href="/show/{{row.id}}">{{row.item_name}}</a></td>
+                    <td>{{row.category}}</td>
+                    <td>{{row.place_purchased}}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

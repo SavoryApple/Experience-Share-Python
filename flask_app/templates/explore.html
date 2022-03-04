@@ -27,24 +27,25 @@
     <div class="navbar-2b">
         <h2>Display By:</h2>
         <a href="/display_explore_sorted_az">A-Z</a>
-        <a href="#">votes</a>
+        <a href="#">Place Purchased</a>
         <a href="/display_explore_sorted_category">category</a>
     </div>
     <table>
         <tr>
             <th>Item Name</th>
+            <th>Place Purchased</th>
             <th>Category</th>
             <th>Created By</th>
-            <th>votes</th>
         </tr>
         {% for one_story in stories %}
         <tr>
                 <td>
                     <a href="/show/{{one_story.id}}">{{one_story.item_name}}</a>
                 </td>
+                <td>{{one_story.place_purchased}}</td>
                 <td>{{one_story.category}}</td>
                 <td>{{one_story.first_name}} {{one_story.last_name}}</td>
-                <td>Coming soon...</td>
+                
         </tr>
         {% endfor %}
     </table>

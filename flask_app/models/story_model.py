@@ -16,7 +16,7 @@ class Story:
 
     @classmethod
     def save(cls, data):
-        query = """INSERT INTO stories (category, item_name, place_purchased, img_url, story, created_at, updated_at, creator_id) VALUES (%(category)s, %(item_name)s, %(place_purchased)s, %(img_url)s, %(story)s, NOW(), NOW(), %(creator_id)s);"""
+        query = "INSERT INTO stories (category, item_name, place_purchased, img_url, story, created_at, updated_at, creator_id) VALUES (%(category)s, %(item_name)s, %(place_purchased)s, %(img_url)s, %(story)s, NOW(), NOW(), %(creator_id)s);"
         return connectToMySQL('story_project_schema').query_db( query, data )
 
     @staticmethod
@@ -88,6 +88,11 @@ class Story:
     @classmethod
     def delete_story(cls, data):
         query = """DELETE FROM stories WHERE id = %(id)s"""
+        return connectToMySQL('story_project_schema').query_db( query, data )
+
+    @classmethod
+    def get_one_with_users_and_comments_and_sum_votes(cls, data):
+        query = "SELECT *, SUM(vote) FROM comment_votes LEFT JOIN comments ON comments.id = comment_votes.comment_id LEFT JOIN users ON comment_votes.user_id = users.id WHERE story_id = %(story_id)s GROUP BY comments.id ORDER BY SUM(vote) DESC;"
         return connectToMySQL('story_project_schema').query_db( query, data )
 
 

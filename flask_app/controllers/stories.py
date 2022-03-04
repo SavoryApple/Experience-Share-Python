@@ -5,6 +5,7 @@ from flask_app.models.story_model import Story
 from flask_app.models.comment_model import Comment
 from flask_app.models.story_vote_model import story_Vote
 from flask_app.controllers import users
+from flask_app.models.comment_vote_model import comment_Vote
 
 
 # DISPLAY ROUTES###############################################################################################
@@ -15,7 +16,7 @@ def display_create():
     return render_template('create_story.html')
 
 @app.route('/show/<int:story_id>')
-def display_view(story_id):
+def display_view_story(story_id):
     if "user_id" not in session:
         return redirect('/')
     loggedin_user = User.get_by_id({'id' : int(session['user_id'])})

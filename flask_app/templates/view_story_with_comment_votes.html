@@ -35,7 +35,7 @@
         <p class="tab example-paragraph">{{story_info.story}}</p>
         <div class="tab text-margin votes">
             Created By:
-            <a href="/user/{{story_info.user.id}}">{{story_info.user.first_name}} {{story_info.user.last_name}}</a> | {{story_info.created_at}} |
+            <a href="#">{{story_info.user.first_name}} {{story_info.user.last_name}}</a> | {{story_info.created_at}} |
             <a href="/upvote/{{story_info.id}}">
                 <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}">
             </a>
@@ -49,11 +49,11 @@
             {% for one_comment in comments %}
             <div class="comments-all-content">
                 <div class="comment-votes">
-                    <a href="/upvote/{{one_comment.id}}/{{story_info.id}}">
+                    <a href="/upvote/{{one_comment.comment_id}}/{{story_info.id}}">
                         <img class="up-arrow" src="{{ url_for('static', filename='img/up-arrow.png') }}">
                     </a>
-                    <p>vote</p>
-                    <a href="/downvote/{{one_comment.id}}/{{story_info.id}}">
+                    <p> {{one_comment['SUM(vote)']}} </p>
+                    <a href="/downvote/{{one_comment.comment_id}}/{{story_info.id}}">
                         <img class="down-arrow" src="{{ url_for('static', filename='img/down-arrow.png') }}">
                     </a>
                 </div>

@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 
-class story_Vote:
+class comment_Vote:
     def __init__( self , data ):
         self.id = data['id']
         self.vote = data['vote']
@@ -11,45 +11,42 @@ class story_Vote:
         self.story_id = data['story_id']
 
     @classmethod
-    def create_vote_with_user(cls, data):
-        query = "SELECT * FROM story_votes WHERE user_id = %(user_id)s AND story_id = %(story_id)s;"
+    def create_vote_comment_with_user(cls, data):
+        query = "SELECT * FROM comment_votes WHERE user_id = %(user_id)s AND comment_id = %(comment_id)s;"
         results = connectToMySQL('story_project_schema').query_db( query, data )
         if results:
             return False
         else:
-            query = "INSERT INTO story_votes (vote, created_at, updated_at, user_id, story_id) VALUES (0, NOW(), NOW(), %(user_id)s, %(story_id)s);"
+            query = "INSERT INTO comment_votes (vote, created_at, updated_at, user_id, comment_id) VALUES (0, NOW(), NOW(), %(user_id)s, %(comment_id)s);"
             return connectToMySQL('story_project_schema').query_db( query, data )
 
     @classmethod
-    def upvote_on_story_from_user(cls, data):
-        query = "SELECT * FROM story_votes WHERE user_id = %(user_id)s AND story_id = %(story_id)s AND vote = 1"
+    def upvote_comment_on_story_from_user(cls, data):
+        query = "SELECT * FROM comment_votes WHERE user_id = %(user_id)s AND comment_id = %(comment_id)s AND vote = 1"
         results = connectToMySQL('story_project_schema').query_db( query, data )
         if results:
             return False
         else:
-            query = "UPDATE story_votes SET vote = 1 WHERE user_id = %(user_id)s AND story_id = %(story_id)s"
+            query = "UPDATE comment_votes SET vote = 1 WHERE user_id = %(user_id)s AND comment_id = %(comment_id)s"
             return connectToMySQL('story_project_schema').query_db( query, data )
 
     @classmethod
-    def downvote_on_story_from_user(cls, data):
-        query = "SELECT * FROM story_votes WHERE user_id = %(user_id)s AND story_id = %(story_id)s AND vote = -1"
+    def downvote_comment_on_story_from_user(cls, data):
+        query = "SELECT * FROM comment_votes WHERE user_id = %(user_id)s AND comment_id = %(comment_id)s AND vote = -1"
         results = connectToMySQL('story_project_schema').query_db( query, data )
         if results:
             return False
         else:
-            query = "UPDATE story_votes SET vote = -1 WHERE user_id = %(user_id)s AND story_id = %(story_id)s"
+            query = "UPDATE comment_votes SET vote = -1 WHERE user_id = %(user_id)s AND comment_id = %(comment_id)s"
             return connectToMySQL('story_project_schema').query_db( query, data )
 
     @classmethod
-    def sum_all_votes_with_story_id(cls, data):
-        query = "SELECT SUM(vote) FROM story_votes WHERE story_id = %(story_id)s;"
+    def sum_all_votes_with_comment_id(cls, data):
+        query = "SELECT SUM(vote) FROM comment_votes WHERE comment_id = %(comment_id)s AND user_id = %(user_id)s;"
         results = connectToMySQL('story_project_schema').query_db( query, data )
         if results:
             return results[0]
         return False
+
     
-    @classmethod
-    def all_votes_all_users_all_stories():
-        query = "SELECT *, SUM(vote) FROM story_votes LEFT JOIN users ON users.id = story_votes.user_id JOIN stories ON stories.id = story_votes.story_id;"
-        pass
         

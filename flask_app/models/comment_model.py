@@ -27,4 +27,5 @@ class Comment:
     def get_all_with_all_users(cls, data):
         query = "SELECT * FROM comments LEFT JOIN users ON users.id = comments.user_id WHERE story_id = %(story_id)s ORDER BY comments.created_at DESC;"
         return connectToMySQL('story_project_schema').query_db( query, data )
-        
+
+    
